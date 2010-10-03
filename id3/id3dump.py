@@ -16,49 +16,6 @@ def reencodeValue(s):
   except UnicodeDecodeError:
     return s
 
-def reencodeId3Tags(fnam):
-  print "Reading", fnam
-  tag = eyeD3.Tag()
-  tag.link(fnam)
-  print 'Old Album:', repr(tag.getAlbum())
-  print 'Old Title:', repr(tag.getTitle())
-  attrs = dir(tag)
-  dirty = False
-  for attr in attrs:
-    m = GETTER_RE.match(attr)
-    if m:
-      prop_name = m.group(1)
-      setter = ('set' + prop_name)
-      if setter in attrs:
-        prop_value = getattr(tag, attr)()
-        if type(prop_value) is unicode:
-          reencoded_value = reencodeValue(prop_value)
-          if reencoded_value != prop_value:
-            print '  re-encoding', prop_name, 'as', repr(reencoded_value)
-            getattr(tag, setter)(reencoded_value)
-            dirty = True
-  if dirty:
-#    tag.setTextEncoding(eyeD3.frames.UTF_16_ENCODING)
-
-    for frame in tag.frames:
-      if isinstance(frame, eyeD3.frames.TextFrame):
-        if type(frame.text) is not unicode:
-          raise "WTF!?"
-        frame.encoding = eyeD3.frames.UTF_16BE_ENCODING
-
-#    for frame in tag.frames:
-#      if isinstance(frame, eyeD3.frames.TextFrame):
-#        try:
-#          frame.text.encode(eyeD3.frames.id3EncodingToString(frame.encoding))
-#        except UnicodeEncodeError:
-#          frame.encoding = eyeD3.frames.UTF_8_ENCODING
-    print '  saving updates to', fnam
-    tag.update()
-    tag = eyeD3.Tag()
-    tag.link(fnam)
-    print 'New Album:', repr(tag.getAlbum())
-    print 'New Title:', repr(tag.getTitle())
-
 def dumpId3Tags(fnam):
   print "Reading", fnam
   tag = eyeD3.Tag()

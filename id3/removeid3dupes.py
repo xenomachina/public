@@ -40,7 +40,12 @@ def FrameToDict(frame):
 
 def main(argv):
   for fnam in argv[1:]:
-    removeDuplicateId3Frames(fnam)
+    try:
+      removeDuplicateId3Frames(fnam)
+    except ValueError, e:
+      print e.message
+    except TypeError, e:
+      print e.message
 
 if __name__ == '__main__':
   main(sys.argv)
