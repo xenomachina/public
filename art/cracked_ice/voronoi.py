@@ -1,3 +1,7 @@
+#!/usr/bin/python
+#
+# From http://www.oxfish.com/python/voronoi.py
+
 #############################################################################
 #
 # Voronoi diagram calculator/ Delaunay triangulator
@@ -676,16 +680,16 @@ class SiteList(object):
         self.__sites = []
         self.__sitenum = 0
 
-        self.__xmin = pointList[0].x
-        self.__ymin = pointList[0].y
-        self.__xmax = pointList[0].x
-        self.__ymax = pointList[0].y
+        self.__xmin = pointList[0][0]
+        self.__ymin = pointList[0][1]
+        self.__xmax = pointList[0][0]
+        self.__ymax = pointList[0][1]
         for i,pt in enumerate(pointList):
-            self.__sites.append(Site(pt.x,pt.y,i))
-            if pt.x < self.__xmin: self.__xmin = pt.x
-            if pt.y < self.__ymin: self.__ymin = pt.y
-            if pt.x > self.__xmax: self.__xmax = pt.x
-            if pt.y > self.__ymax: self.__ymax = pt.y
+            self.__sites.append(Site(pt[0],pt[1],i))
+            if pt[0] < self.__xmin: self.__xmin = pt[0]
+            if pt[1] < self.__ymin: self.__ymin = pt[1]
+            if pt[0] > self.__xmax: self.__xmax = pt[0]
+            if pt[1] > self.__ymax: self.__ymax = pt[1]
         self.__sites.sort()
 
     def setSiteNumber(self,site):
@@ -777,7 +781,7 @@ if __name__=="__main__":
             fld = line.split()
             x = float(fld[0])
             y = float(fld[1])
-            pts.append(Site(x,y))
+            pts.append((x,y))
         if len(args) > 0: fp.close()
 
     if doHelp or len(pts) == 0:
@@ -786,4 +790,3 @@ if __name__=="__main__":
 
     sl = SiteList(pts)
     voronoi(sl,c)
-
