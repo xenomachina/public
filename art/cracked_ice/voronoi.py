@@ -751,7 +751,7 @@ def computeDelaunayTriangulation(points):
     """
     siteList = SiteList(points)
     context  = Context()
-    context.triangulate = true
+    context.triangulate = True
     voronoi(siteList,context)
     return context.triangles
 
