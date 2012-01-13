@@ -6,6 +6,7 @@ import sys
 import types
 from sets import Set
 
+
 GETTER_RE = re.compile('^get([A-Z].*)$')
 
 def reencodeValue(s):

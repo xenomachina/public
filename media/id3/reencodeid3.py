@@ -4,6 +4,15 @@ import eyeD3
 import re
 import sys
 
+"""
+Repairs ID3 tags that were incorrectly marked as latin1 when they were
+actually UTF-8.
+
+I had a bunch of MP3s that I'd ripped/encoded with Grip. I don't know if
+Grip or one of the many tools it calls out to was responsible, but the
+encoding marker was set incorrectly.
+"""
+
 GETTER_RE = re.compile('^get([A-Z].*)$')
 
 def reencodeValue(s):

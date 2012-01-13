@@ -5,6 +5,13 @@ import sys
 import types
 from sets import Set
 
+"""
+Removes duplicate ID3 frames.
+
+For some reason Grip (or one of the tools it calls out to) put a bunch
+of duplicate ID3 frames in a bunch of my MP3s.
+"""
+
 def removeDuplicateId3Frames(fnam):
   print "Reading", fnam
   tag = eyeD3.Tag()
