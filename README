@@ -1,0 +1,19 @@
+This is where I'll put random scripts and stuff I want to make available
+to the public, but which aren't really big enough to have their own
+project.
+
+Some things here are likely to be half-baked or minimally tested. I try
+to write reasonably portable code, but a lot of this stuff has only been
+tested on one platform (usually Linux (Ubuntu) or OS-X with MacPorts).
+
+Use at your own risk.
+
+
+media/
+======
+Stuff for dealing with "media" (music, video, photos).
+
+media/dvdrip/dvdrip.py
+----------------------
+A wrapper script for ripping DVDs. Uses HandbrakeCLI. Currently Mac
+only, but probably easy to port to Linux.
