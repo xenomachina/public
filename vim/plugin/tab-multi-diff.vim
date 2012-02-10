@@ -8,7 +8,7 @@
 " URL:           https://github.com/xenomachina/public/tree/master/vim/plugin
 "
 " Adds some functions to vim to make it easier to use vim as a
-" mult-tabbed diff tool.
+" multi-tabbed diff tool.
 
 
 " Creates a new tab page for each consecutive pair of buffers (split
