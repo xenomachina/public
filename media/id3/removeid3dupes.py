@@ -12,6 +12,13 @@ Removes duplicate ID3 tag frames.
 __copyright__ = \
     "Copyright 2010 Laurence Gonsalves <laurence@xenomachina.com>. GNU GPL v2."
 
+"""
+Removes duplicate ID3 frames.
+
+For some reason Grip (or one of the tools it calls out to) put a bunch
+of duplicate ID3 frames in a bunch of my MP3s.
+"""
+
 def removeDuplicateId3Frames(fnam):
   print "Reading", fnam
   id3 = ID3(fnam)
