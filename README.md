@@ -9,6 +9,18 @@ tested on one platform (usually Linux (Ubuntu) or OS-X with MacPorts).
 Use at your own risk.
 
 
+art/
+====
+
+Code that makes pretty pictures.
+
+
+cjk/
+====
+
+Code for dealing with CJK (Chinese, Japanese and Korean). Mostly
+Chinese, actually, as that's what I'm most familiar with.
+
 media/
 ======
 Stuff for dealing with "media" (music, video, photos).
@@ -23,3 +35,9 @@ media/id3/*
 Scripts for manipulating ID3 tags. These are currently pretty old, and
 use `eyeD3` which I've since stopped using. (My newer ID3 scripts all
 use Mutagen.)
+
+
+palm/
+=====
+
+PalmOS related utilities.
