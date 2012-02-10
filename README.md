@@ -18,15 +18,8 @@ media/dvdrip/dvdrip.py
 A wrapper script for ripping DVDs. Uses HandbrakeCLI. Currently Mac
 only, but probably easy to port to Linux.
 
-media/id3/id3dump.py
---------------------
-Dumps all of the ID3 frames to stdout. For debugging ID3 issues.
-
-media/id3/reencodeid3.py
-------------------------
-Repairs ID3 tags that were incorrectly marked as latin1 when they were
-actually UTF-8.
-
-media/id3/removeid3dupes.py
----------------------------
-Removes duplicate ID3 frames.
+media/id3/*
+-----------
+Scripts for manipulating ID3 tags. These are currently pretty old, and
+use `eyeD3` which I've since stopped using. (My newer ID3 scripts all
+use Mutagen.)
