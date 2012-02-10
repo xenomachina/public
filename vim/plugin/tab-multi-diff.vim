@@ -73,6 +73,6 @@ function! s:AddBufferToTab()
   endif
   let s:tab_multi_diff = ! s:tab_multi_diff
   exe 'b ' . buf
-  set diff
+  diffthis
   tabfirst
 endfun

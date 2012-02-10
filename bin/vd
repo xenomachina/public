@@ -2,5 +2,11 @@
 #
 # Like gvimdiff, but can diff multiple pairs of files. (Also, uses
 # MacVim on Macs.)
+#
+# Also disables folding. I hate diff folding.
 
-exec v -c 'silent call TabMultiDiffMaximized()' "$@"
+exec v \
+  -c 'silent call TabMultiDiffMaximized()' \
+  -c 'tabdo windo set nofoldenable foldcolumn=0' \
+  -c 'tabfirst' \
+  "$@"
