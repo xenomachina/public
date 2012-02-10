@@ -1,9 +1,16 @@
 #!/usr/bin/python
 
-import eyeD3
 import sys
 import types
-from sets import Set
+
+from mutagen.id3 import ID3
+
+"""
+Removes duplicate ID3 tag frames.
+"""
+
+__copyright__ = \
+    "Copyright 2010 Laurence Gonsalves <laurence@xenomachina.com>. GNU GPL v2."
 
 """
 Removes duplicate ID3 frames.
@@ -14,12 +21,11 @@ of duplicate ID3 frames in a bunch of my MP3s.
 
 def removeDuplicateId3Frames(fnam):
   print "Reading", fnam
-  tag = eyeD3.Tag()
-  tag.link(fnam)
+  id3 = ID3(fnam)
   frame_dicts = []
   remove_indices = []
   index = 0
-  for frame in tag.frames:
+  for frame in id3.frames:
     frame_dict = FrameToDict(frame)
     if frame_dict in frame_dicts:
       remove_indices.append(index)
@@ -28,11 +34,11 @@ def removeDuplicateId3Frames(fnam):
     index += 1
   remove_indices.reverse()
   for index in remove_indices:
-    print "Removing duplicate %s frame #%d" % (tag.frames[index].header.id, index)
-    #tag.frames.removeFrameByIndex(index)  # HAS A BUG
-    list.__delitem__(tag.frames, index) #so use this instead
+    print "Removing duplicate %s frame #%d" % (id3.frames[index].header.id, index)
+    #id3.frames.removeFrameByIndex(index)  # HAS A BUG
+    list.__delitem__(id3.frames, index) #so use this instead
   if remove_indices:
-    tag.update()
+    id3.update()
 
 def FrameToDict(frame):
   frame_dict = {'header.id': frame.header.id}
