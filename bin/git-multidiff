@@ -1,15 +1,38 @@
 #!/usr/bin/env python
 
+"""
+Like git-difftool, but executes all diffs in parallel.
+
+Installation:
+  - Put this and _git-multidiff-helper in your path.
+  - Set the git config variable multidiff.tool to a multidiff tool. This
+    is any program that when given pairs of filenames on the
+    commandline will show you the pair-wise diffs.
+
+    Make sure that this command does not background itself, as numerous
+    temporary files will be obliterated the moment it returns.
+
+    If you like vim(diff), you might want to try my 'vd' wrapper script.
+    Here's an example .gitconfig snippet for using it:
+
+      [multidiff]
+        tool = vd -f
+"""
+
 import commands
 import os
 import shutil
+import stat
 import subprocess
 import sys
 import tempfile
 
-"""
-Like git-difftool, but executes all diffs in parallel.
-"""
+__copyright__ = "Copyright 2012 Laurence Gonsalves"
+__author__    = "Laurence Gonsalves"
+__license__   = "GPLv2"
+__email__     = "laurence@xenomachina.com"
+
+DEBUG = False
 
 def main(argv):
   try:
@@ -19,7 +42,7 @@ def main(argv):
         'Error: %r returned status %r' % (' '.join(exc.cmd), exc.returncode)
     sys.exit(1)
 
-  tmpdir = tempfile.mkdtemp()
+  tmpdir = os.path.join(tempfile.mkdtemp(), '')
   try:
     os.environ['GIT_MULTIDIFF_TEMP'] = tmpdir
     argsfile = os.path.join(tmpdir, 'args')
@@ -31,7 +54,28 @@ def main(argv):
         if x]
     assert not (len(difftool_args) % 2), \
         "Expected even number of files, but got %d" % len(difftool_args)
-    # TODO: move chmod stuff here, check that link count == 1 and in tmpdir.
+
+    for fnam in set(difftool_args):
+      if fnam.startswith(tmpdir):
+        file_stat = os.stat(fnam)
+        if file_stat.st_nlink == 1:
+          # Try to make copy read-only. Making the temporary files
+          # read-only is nice for diff tools that allow editing (like
+          # vimdiff) as this provides a hint that the temporary file
+          # should not be edited.
+          #
+          # We only do this if nlink==1 on the off chance that git is
+          # still using the file we hard-linked (we don't want to alter
+          # shared permissions).
+          try:
+            perms = file_stat.st_mode \
+                & ~(stat.S_IWGRP | stat.S_IWOTH | stat.S_IWUSR)
+            os.chmod(fnam, perms)
+            if DEBUG: print 'chmod a-r %r' % fnam
+          except IOError:
+            pass # we tried, but it isn't critical that we succeed
+
+        # TODO: attempt to shorten pathnames of temp files?
 
     if difftool_args:
       # Instead of using `subprocess.check_call([tool] + difftool_args)`
