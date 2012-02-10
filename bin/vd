@@ -1,0 +1,6 @@
+#!/bin/bash
+#
+# Like gvimdiff, but can diff multiple pairs of files. (Also, uses
+# MacVim on Macs.)
+
+exec v -c 'silent call TabMultiDiffMaximized()' "$@"

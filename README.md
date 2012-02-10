@@ -14,6 +14,10 @@ art/
 
 Code that makes pretty pictures.
 
+bin/
+====
+
+Small scripts I keep in ~/bin/.
 
 cjk/
 ====
@@ -41,3 +45,9 @@ palm/
 =====
 
 PalmOS related utilities.
+
+
+vim/
+====
+
+Vim related stuff. This is mostly a subset of stuff under ~/.viminfo/.
