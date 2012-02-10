@@ -28,21 +28,37 @@ def mkdirp(dir):
     if e.errno != errno.EEXIST:
       raise
 
+def looks_like_a_temp_file(fnam):
+  """
+  Returns True iff the file appears to be a git-difftool temporary file.
+  """
+  return (
+    # temp files are all absolute
+    os.path.isabs(fnam)
+    # /dev/null is probably the only non-regular file we'll ever see, but
+    # lets assume all special files are permanent.
+    and stat.S_ISREG(os.stat(fnam).st_mode))
+
 def main(argv):
   DEBUG = False
   # TODO: find some way to pass fatal errors up to top-level?
   tmpdir = os.environ['GIT_MULTIDIFF_TEMP']
   out = open(os.path.join(tmpdir, 'args'), 'a')
   for fnam in argv[1:]:
-    # TODO: treat files in /dev/ like files in workspace?
-    if os.path.isabs(fnam):
-      if fnam.startswith('//'):
-        # A leading double-slash has system defined meaning in POSIX so
-        # treat such files as different from others just in case.
-        dest = os.path.join(tmpdir, 'dslash')
-      else:
-        dest = os.path.join(tmpdir, 'slash')
+    if looks_like_a_temp_file(fnam):
+      # A leading double-slash has system defined meaning in POSIX so
+      # treat such files as different from others just in case.
+      root = 'dslash' if fnam.startswith('//') else 'slash'
+
+      # The '' here adds the path separator at the end.
+      dest = os.path.join(tmpdir, root, '')
+
+      # XXX Use + instead of os.join because os.join would ignore the
+      # left arg if the right arg is absolute. Unfortunately, doing this
+      # may not be entirely portable, especially if the file system
+      # doesn't like seeing multiple path separators in a row.
       dest += fnam
+
       mkdirp(os.path.dirname(dest))
       try:
         os.link(fnam, dest)
