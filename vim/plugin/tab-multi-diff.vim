@@ -25,7 +25,7 @@
 "   This will result in two tabs: old-foo+foo diff, and old-bar+bar diff.
 function! TabMultiDiff()
   let s:tab_multi_diff = 0
-  bufdo call s:AddBufferToTab()
+  argdo call s:AddBufferToTab()
   tabclose
 endfun
 
