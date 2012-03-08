@@ -74,6 +74,18 @@ def main(argv):
         if DEBUG: print 'cp %r -> %r' % (fnam, dest)
     else:
       dest = fnam
+
+    if not os.path.isabs(dest):
+      # git-multidiff invokes the diff from the directory in which
+      # git-multidiff was invoked, but _git-multidiff-helper is invoked
+      # from the repo's root.  Because these may not be the same, we
+      # need to adjust relative filenames to be absolute, or better yet,
+      # to be relative to the directory in which the diff will run.
+      dest = os.path.abspath(dest)
+      git_prefix = os.environ.get('GIT_PREFIX')
+      if git_prefix is not None:
+        dest = os.path.relpath(dest, os.environ['GIT_PREFIX'])
+
     out.write(dest)
     out.write('\0')
   out.close()
