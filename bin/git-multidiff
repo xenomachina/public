@@ -44,6 +44,8 @@ def main(argv):
 
   tmpdir = os.path.join(tempfile.mkdtemp(), '')
   try:
+    # TODO: use "git rev-parse --show-toplevel" and friends when
+    # GIT_MULTIDIFF_TEMP is not set.
     os.environ['GIT_MULTIDIFF_TEMP'] = tmpdir
     argsfile = os.path.join(tmpdir, 'args')
     open(argsfile, 'w').close()
