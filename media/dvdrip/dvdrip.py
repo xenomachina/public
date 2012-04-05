@@ -1,4 +1,5 @@
 #!/usr/bin/env python2.7
+# coding=utf-8
 
 import argparse
 import errno
@@ -271,8 +272,9 @@ def main():
   output = args.output
 
   if args.input_device:
-    input = FindMountPoint(input)
-
+    found = FindMountPoint(input)
+    assert found is not None, 'Nothing mounted on %r' % input
+    input = found
   assert os.path.exists(input), '%r not found' % input
   assert os.path.isdir(input), '%r is not a directory' % input
   print 'Reading from %r' % input
