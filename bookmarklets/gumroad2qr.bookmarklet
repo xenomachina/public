@@ -1,0 +1,23 @@
+// Bookmarklet for converting a gumroad.com product page into something
+// you can print. It removes links and the purchase form, and replaces
+// the buy button with a QR code and URL.
+
+var b = document.getElementById('i_want_this_button');
+var p = b.parentElement;
+p.removeChild(b);
+var img = document.createElement('img');
+img.src='http://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chld=L|0&chl=' + escape(document.location);
+img.style.padding='1em';
+var c = document.createElement('center');
+c.style.fontSize='200%';
+c.style.fontFamily='monospace';
+c.appendChild(img);
+c.appendChild(document.createElement('br'));
+c.appendChild(document.createTextNode(document.location));
+p.appendChild(c);
+var b = document.getElementById('buy-form-main');
+b.parentElement.removeChild(b);
+var b = document.getElementById('sharing');
+b.parentElement.removeChild(b);
+var b = document.getElementsByClassName('gumroad-pitch')[0];
+b.parentElement.removeChild(b);
