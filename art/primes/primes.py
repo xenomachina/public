@@ -106,9 +106,14 @@ RGB_SIZE = 256**3
 def printStylesheet(prime_to_color):
   print'''<style>
     table {
+      vertical-align: bottom;
       width: 1in;
       height: 1in;
       display: inline-table;
+    }
+    tr, td {
+      /* KLUDGE: Makes columns equal width on Safari. */
+      width:1%;
     }
     '''
 
