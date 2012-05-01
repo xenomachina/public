@@ -64,6 +64,12 @@ def compute_factorization(n):
   prime_to_color is a dict that maps from primes to a unique index.
   These indices are "packed". This is handly if you want to have
   per-prime information in an array.
+
+  The implementation is based on the sieve of Eratosthenes, with the
+  added wrinkle that we don't just mark numbers as composite, but
+  actually record all of their factors. We also keep track of duplicate
+  factors (eg: 12 has one 3 and two 2s) so we have additional iterations
+  for each power of the prime.
   """
   factorizations = [list(x) for x in [()] * (n + 1)]
   c = 0
@@ -84,6 +90,13 @@ def compute_factorization(n):
 
 
 def htmlFormat(layout):
+  """
+  Generates a %-format string for producing HTML with the given layout.
+
+  The input layout is a sequence of natural numbers. Each number
+  represents a row, and indicates the number of cells to place on that
+  row.
+  """
   product = reduce(operator.mul, layout, 1)
   result = '<table title="%s">'
   for columns in layout:
