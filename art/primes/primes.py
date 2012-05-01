@@ -113,12 +113,15 @@ def printStylesheet(prime_to_color):
     '''
 
   # We want a diverse palette, so evenly divide a Hilbert curve for RGB
-  # space.
+  # space. This is inspired by (and uses code from)
+  # http://corte.si/posts/visualisation/binvis/index.html
   num_colors = max(prime_to_color.values()) + 1
   hilbert = scurve.fromSize('hilbert', 3, RGB_SIZE)
   colors = [hilbert[i] for i in range(0, RGB_SIZE, RGB_SIZE // num_colors)]
+
   # We also want numbers that are close to each other to have very
-  # different colors, so phiffle the colors.
+  # different colors, so phiffle the colors, and convert to CSS-friendly
+  # form while we're at it.
   colors = ['#%02x%02x%02x' % (r,g,b) for (r,g,b) in phiffle(colors)]
 
   for prime, color in sorted(prime_to_color.items()):
