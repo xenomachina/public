@@ -160,7 +160,7 @@ def main(n):
 Factorization Sweater</a>. Below are the factorizations for 1 through %d.</p>
 
 <p>Code is available
-<a href="https://github.com/xenomachina/public/tree/master/art/primes">here</a>.</p>
+<a href="https://github.com/xenomachina/public/blob/master/art/primes/primes.py">here</a>.</p>
 
 <p>Tip: Try adjusting the width of your browser window to see what
 patterns show up with different numbers of columns.</p>
