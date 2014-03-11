@@ -29,23 +29,16 @@ media/
 ======
 Stuff for dealing with "media" (music, video, photos).
 
-media/dvdrip/dvdrip.py
-----------------------
-A wrapper script for ripping DVDs. Uses HandbrakeCLI. Currently Mac
-only, but probably easy to port to Linux.
-
 media/id3/*
 -----------
 Scripts for manipulating ID3 tags. These are currently pretty old, and
 use `eyeD3` which I've since stopped using. (My newer ID3 scripts all
 use Mutagen.)
 
-
 palm/
 =====
 
 PalmOS related utilities.
-
 
 vim/
 ====
