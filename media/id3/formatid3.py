@@ -45,6 +45,7 @@ class FieldFormatNode(object):
     else:
       fmt = u'%'
     frame = id3[self.__field]
+    assert frame is not None
     if isinstance(frame, NumericTextFrame) or isinstance(frame, NumericPartTextFrame):
       fmt += 'd'
       value = +frame
@@ -115,7 +116,11 @@ def parseFormat(formatString):
 def main(argv):
   format = parseFormat(argv[1].decode('utf-8'))
   for fnam in argv[2:]:
-    print formatId3(format, fnam).encode('utf-8')
+    new_fnam = formatId3(format, fnam)
+    if not new_fnam:
+      print >>sys.stderr, "Can't format %r" % fnam
+    else:
+      print new_fnam.encode('utf-8')
 
 if __name__ == '__main__':
   main(sys.argv)
