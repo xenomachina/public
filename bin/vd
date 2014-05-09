@@ -9,7 +9,7 @@
 
 exec v -R \
   --role "gvimdiff" \
-  -c 'silent! call TabMultiDiff()' \
+  -c 'silent call TabMultiDiffArgs()' \
   -c 'tabdo windo set nofoldenable foldcolumn=0' \
   -c 'tabfirst' \
   -c 'autocmd VimEnter * silent! call EquilizeAllTabWindows()' \
