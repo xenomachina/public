@@ -1,17 +1,12 @@
 #!/bin/bash
 #
-# Like gvimdiff, but:
-# - Sets read-only by default.
-# - Can diff multiple pairs of files.
-# - Disables folding. I hate diff folding.
-# - Sets window role and exits workspace to play nice with my i3 setup.
-# - Uses MacVim on Macs.
+# Like gvimdiff, but can diff multiple pairs of files. (Also, uses
+# MacVim on Macs.)
+#
+# Also disables folding. I hate diff folding.
 
-exec v -R \
-  --role "gvimdiff" \
-  -c 'silent call TabMultiDiffArgs()' \
+exec v \
+  -c 'silent call TabMultiDiffMaximized()' \
   -c 'tabdo windo set nofoldenable foldcolumn=0' \
   -c 'tabfirst' \
-  -c 'autocmd VimEnter * silent! call EquilizeAllTabWindows()' \
-  -c 'autocmd VimLeavePre * silent! !i3-msg "workspace prev_on_output"' \
   "$@"
